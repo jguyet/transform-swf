@@ -33,6 +33,8 @@ package com.flagstone.transform.coder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Stack;
 
@@ -106,6 +108,12 @@ public final class SWFDecoder {
         stringBuffer = new byte[STR_BUFFER_SIZE];
         encoding = CharacterEncoding.UTF8.getEncoding();
         locations = new Stack<Integer>();
+        try {
+			fill();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     /**
@@ -120,6 +128,12 @@ public final class SWFDecoder {
         stringBuffer = new byte[BUFFER_SIZE];
         encoding = CharacterEncoding.UTF8.getEncoding();
         locations = new Stack<Integer>();
+        try {
+			fill();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     /**
@@ -498,6 +512,29 @@ public final class SWFDecoder {
         }
         return new String(bytes, 0, len, encoding);
     }
+    
+    private int readU30Internal() throws IOException {
+        long u32 = readU32Internal();
+        //no bits above bit 30
+        return (int) (u32 & 0x3FFFFFFF);
+    }
+    
+    private long readU32Internal() throws IOException {
+        int i;
+        long ret = 0;
+        int bytePos = 0;
+        int byteCount = 0;
+        boolean nextByte;
+        do {
+            i = readByte();
+            nextByte = (i >> 7) == 1;
+            i &= 0x7f;
+            ret += (((long) i) << bytePos);
+            byteCount++;
+            bytePos += 7;
+        } while (nextByte && byteCount < 5);
+        return ret;
+    }
 
     /**
      * Read a null-terminated string using the default character set defined in
@@ -515,6 +552,7 @@ public final class SWFDecoder {
         int dest = 0;
         boolean finished = false;
         int count;
+        byte[] array = new byte[0];
 
         while (!finished) {
             available = size - index;
@@ -533,13 +571,15 @@ public final class SWFDecoder {
                     count++;
                 }
             }
-            if (stringBuffer.length < length) {
-                stringBuffer = Arrays.copyOf(stringBuffer, length << 2);
+            if (array.length < length) {
+            	byte[] tmp = new byte[length];
+            	System.arraycopy(array, 0, tmp, 0, array.length);
+            	array = tmp;
             }
-            System.arraycopy(buffer, start, stringBuffer, dest, count);
-            dest += length;
+            System.arraycopy(buffer, start, array, dest, count);
+            dest = length;
         }
-        return new String(stringBuffer, 0, length, encoding);
+        return new String(array, 0, length, encoding);
     }
 
     /**
