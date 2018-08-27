@@ -283,4 +283,9 @@ public final class GetUrl2 implements Action {
         coder.writeShort(1);
         coder.writeByte(request);
     }
+    
+    @Override
+	public String getActionName() {
+		return "GetUrl2";
+	}
 }

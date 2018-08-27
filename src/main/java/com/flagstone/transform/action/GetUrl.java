@@ -216,4 +216,9 @@ public final class GetUrl implements Action {
         coder.writeString(url);
         coder.writeString(target);
     }
+    
+    @Override
+	public String getActionName() {
+		return "GetUrl";
+	}
 }

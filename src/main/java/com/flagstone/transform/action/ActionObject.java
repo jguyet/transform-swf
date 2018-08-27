@@ -170,4 +170,9 @@ public final class ActionObject implements Action {
             coder.writeBytes(data);
         }
     }
+    
+    @Override
+	public String getActionName() {
+		return "ActionObject";
+	}
 }

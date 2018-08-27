@@ -294,4 +294,9 @@ public enum BasicAction implements Action {
         coder.writeByte(type);
 
     }
+    
+    @Override
+	public String getActionName() {
+		return "BasicAction";
+	}
 }

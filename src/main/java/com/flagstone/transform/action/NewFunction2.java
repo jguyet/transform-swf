@@ -584,4 +584,9 @@ public final class NewFunction2 implements Action {
             coder.writeByte(0);
         }
     }
+    
+    @Override
+	public String getActionName() {
+		return "NewFunction2";
+	}
 }

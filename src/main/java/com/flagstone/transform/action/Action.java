@@ -38,4 +38,6 @@ import com.flagstone.transform.coder.SWFEncodeable;
  * actions that can be added to a movie.
  */
 public interface Action extends SWFEncodeable, Copyable<Action> {
+	
+	public String getActionName();
 }

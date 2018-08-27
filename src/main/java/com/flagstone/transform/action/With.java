@@ -164,4 +164,9 @@ public final class With implements Action {
             action.encode(coder, context);
         }
     }
+    
+    @Override
+	public String getActionName() {
+		return "With";
+	}
 }

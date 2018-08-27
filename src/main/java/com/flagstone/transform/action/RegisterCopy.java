@@ -150,4 +150,9 @@ public final class RegisterCopy implements Action {
         coder.writeShort(1);
         coder.writeByte(number);
     }
+    
+    @Override
+	public String getActionName() {
+		return "RegisterCopy";
+	}
 }

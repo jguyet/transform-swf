@@ -153,4 +153,9 @@ public final class Jump implements Action {
         coder.writeShort(2);
         coder.writeShort(offset);
     }
+    
+    @Override
+	public String getActionName() {
+		return "Jump";
+	}
 }

@@ -344,4 +344,9 @@ public final class NewFunction implements Action {
             action.encode(coder, context);
         }
     }
+    
+    @Override
+	public String getActionName() {
+		return "NewFunction";
+	}
 }

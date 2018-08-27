@@ -129,4 +129,9 @@ public final class GotoLabel implements Action {
         coder.writeShort(length);
         coder.writeString(label);
     }
+    
+    @Override
+	public String getActionName() {
+		return "GotoLabel";
+	}
 }

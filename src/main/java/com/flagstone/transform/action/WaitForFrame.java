@@ -174,4 +174,9 @@ public final class WaitForFrame implements Action {
         coder.writeShort(frameNumber);
         coder.writeByte(actionCount);
     }
+    
+    @Override
+	public String getActionName() {
+		return "WaitForFrame";
+	}
 }

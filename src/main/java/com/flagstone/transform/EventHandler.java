@@ -540,4 +540,9 @@ public final class EventHandler implements Action {
             coder.unmark();
         }
     }
+    
+    @Override
+	public String getActionName() {
+		return "EventHandler";
+	}
 }

@@ -202,4 +202,9 @@ public final class Table implements Action {
             coder.writeString(str);
         }
     }
+    
+    @Override
+	public String getActionName() {
+		return "Table";
+	}
 }

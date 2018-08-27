@@ -165,4 +165,9 @@ public final class If implements Action {
         coder.writeShort(2);
         coder.writeShort(offset);
     }
+    
+    @Override
+	public String getActionName() {
+		return "If";
+	}
 }

@@ -519,4 +519,9 @@ public final class ExceptionHandler implements Action {
             action.encode(coder, context);
         }
     }
+    
+    @Override
+	public String getActionName() {
+		return "ExceptionHandler";
+	}
 }

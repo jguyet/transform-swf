@@ -137,4 +137,9 @@ public final class GotoFrame implements Action {
         coder.writeShort(2);
         coder.writeShort(frameNumber);
     }
+    
+    @Override
+	public String getActionName() {
+		return "GotoFrame";
+	}
 }

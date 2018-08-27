@@ -233,4 +233,9 @@ public final class GotoFrame2 implements Action {
             coder.writeShort(frameOffset);
         }
     }
+    
+    @Override
+	public String getActionName() {
+		return "GotoFrame2";
+	}
 }

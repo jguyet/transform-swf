@@ -77,4 +77,9 @@ public final class Call implements Action {
         coder.writeByte(ActionTypes.CALL);
         coder.writeShort(0);
     }
+   
+   @Override
+	public String getActionName() {
+		return "Call";
+	}
 }

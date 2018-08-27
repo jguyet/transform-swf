@@ -107,4 +107,9 @@ public final class ActionData implements Action {
             throws IOException {
         coder.writeBytes(data);
     }
+
+	@Override
+	public String getActionName() {
+		return "ActionData";
+	}
 }

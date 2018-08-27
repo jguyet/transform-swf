@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+    "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+    "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+<suppressions>
+    <suppress checks="JavadocPackageCheck"
+              files="ImageInfo.java"/>
+    <suppress checks="JavadocTypeCheck"
+              files="ImageInfo.java"/>
+    <suppress checks="JavadocMethodCheck"
+              files="ImageInfo.java"/>
+    <suppress checks="JavadocVariableCheck"
+              files="ImageInfo.java"/>
+    <suppress checks="MagicNumberCheck"
+              files="ImageInfo.java"/>
+    <suppress checks="JavadocPackageCheck"
+              files=".*IT\.java"/>
+    <suppress checks="JavadocTypeCheck"
+              files=".*IT\.java"/>
+    <suppress checks="JavadocMethodCheck"
+              files=".*IT\.java"/>
+    <suppress checks="JavadocVariableCheck"
+              files=".*IT\.java"/>
+    <suppress checks="MagicNumberCheck"
+              files=".*IT\.java"/>
+    <suppress checks="JavadocPackageCheck"
+              files=".*Tests?\.java"/>
+    <suppress checks="JavadocTypeCheck"
+              files=".*Tests?\.java"/>
+    <suppress checks="JavadocMethodCheck"
+              files=".*Tests?\.java"/>
+    <suppress checks="JavadocVariableCheck"
+              files=".*Test\.java"/>
+    <suppress checks="MagicNumberCheck"
+              files=".*Test\.java"/>
+</suppressions>

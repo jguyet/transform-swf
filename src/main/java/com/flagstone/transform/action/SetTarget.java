@@ -133,4 +133,9 @@ public final class SetTarget implements Action {
         coder.writeShort(length);
         coder.writeString(target);
     }
+    
+    @Override
+	public String getActionName() {
+		return "SetTarget";
+	}
 }
