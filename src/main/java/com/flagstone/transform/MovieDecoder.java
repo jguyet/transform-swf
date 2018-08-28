@@ -276,7 +276,7 @@ public final class MovieDecoder implements SWFFactory<MovieTag> {
             obj = new ScenesAndLabels(coder);
             break;
         case MovieTypes.DO_ABC:
-            obj = new DoABC(coder);
+        	obj = new DoABC(coder);
             break;
         case MovieTypes.DEFINE_SHAPE_4:
             obj = new DefineShape4(coder, context);

@@ -33,6 +33,7 @@ package com.flagstone.transform.coder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -441,6 +442,13 @@ public final class SWFDecoder {
         }
         return buffer[index++] & BYTE_MASK;
     }
+    
+//    public byte readBytes(byte[] array) throws IOException {
+//        for (int i = 0; i < array.length; i++) {
+//        	array[i] = (byte) this.readByte();
+//        }
+//        return array;
+//    }
 
     /**
      * Reads an array of bytes.
@@ -502,6 +510,11 @@ public final class SWFDecoder {
      * input stream.
      */
     public String readString(final int length) throws IOException {
+    	
+    	if (length == 0) {
+    		return ("");
+    	}
+    	
         final byte[] bytes = new byte[length];
         readBytes(bytes);
         int len;
@@ -511,29 +524,6 @@ public final class SWFDecoder {
             len = length;
         }
         return new String(bytes, 0, len, encoding);
-    }
-    
-    private int readU30Internal() throws IOException {
-        long u32 = readU32Internal();
-        //no bits above bit 30
-        return (int) (u32 & 0x3FFFFFFF);
-    }
-    
-    private long readU32Internal() throws IOException {
-        int i;
-        long ret = 0;
-        int bytePos = 0;
-        int byteCount = 0;
-        boolean nextByte;
-        do {
-            i = readByte();
-            nextByte = (i >> 7) == 1;
-            i &= 0x7f;
-            ret += (((long) i) << bytePos);
-            byteCount++;
-            bytePos += 7;
-        } while (nextByte && byteCount < 5);
-        return ret;
     }
 
     /**
@@ -582,6 +572,62 @@ public final class SWFDecoder {
         return new String(array, 0, length, encoding);
     }
 
+    
+    public static int unsignedByte(byte b) {
+    	return b & 0xFF;
+    }
+    
+    public int readUnsignedByte() throws IOException {
+      return this.readByte() & 0xFF;
+    }
+    
+    public int readSigned32int() throws IOException
+    {
+      int result = this.readByte();
+      if ((result & 0x80) <= 0) {
+        return result;
+      }
+      result = result & 0x7F | this.readByte() << 7;
+      if ((result & 0x4000) <= 0) {
+        return result;
+      }
+      result = result & 0x3FFF | this.readByte() << 14;
+      if ((result & 0x200000) <= 0) {
+        return result;
+      }
+      result = result & 0x1FFFFF | this.readByte() << 21;
+      if ((result & 0x10000000) <= 0) {
+        return result;
+      }
+      return result & 0xFFFFFFF | this.readByte() << 28;
+    }
+    
+    public int readUnsigned32int() throws IOException
+    {
+      int result = readUnsignedByte();
+      if ((result & 0x80) == 0) {
+        return result;
+      }
+      result = result & 0x7F | readUnsignedByte() << 7;
+      if ((result & 0x4000) == 0) {
+        return result;
+      }
+      result = result & 0x3FFF | readUnsignedByte() << 14;
+      if ((result & 0x200000) == 0) {
+        return result;
+      }
+      result = result & 0x1FFFFF | readUnsignedByte() << 21;
+      if ((result & 0x10000000) == 0) {
+        return result;
+      }
+      return result & 0xFFFFFFF | readUnsignedByte() << 28;
+    }
+    
+    public int readUnsigned30int() throws IOException
+    {
+      return this.readUnsigned32int();
+    }
+    
     /**
      * Read an unsigned 16-bit integer.
      *
@@ -690,6 +736,25 @@ public final class SWFDecoder {
             step += Coder.VAR_INT_SHIFT;
         }
         return value;
+    }
+    
+    public double readDouble() throws IOException {
+        if (size - index < 8) {
+            fill();
+        }
+        if (index + 8 > size) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        long value = buffer[index++] & BYTE_MASK;
+        value |= (buffer[index++] & BYTE_MASK) << TO_BYTE1;
+        value |= (buffer[index++] & BYTE_MASK) << TO_BYTE2;
+        value |= (buffer[index++] & BYTE_MASK) << TO_BYTE3;
+        value |= (buffer[index++] & BYTE_MASK) << 32;
+        value |= (buffer[index++] & BYTE_MASK) << 40;
+        value |= (buffer[index++] & BYTE_MASK) << 48;
+        value |= (buffer[index++] & BYTE_MASK) << 56;
+        
+        return (double)value;
     }
 
     /**
