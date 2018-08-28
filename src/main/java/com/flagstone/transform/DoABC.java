@@ -34,7 +34,6 @@ package com.flagstone.transform;
 import java.io.IOException;
 import java.util.Arrays;
 
-import com.flagstone.transform.abcfile.AbcFile;
 import com.flagstone.transform.coder.Coder;
 import com.flagstone.transform.coder.Context;
 import com.flagstone.transform.coder.SWFDecoder;
@@ -63,8 +62,6 @@ public final class DoABC implements MovieTag {
 
     /** The length of the object, minus the header, when it is encoded. */
     private transient int length;
-    
-    private AbcFile abcFile;
 
     /**
      * Creates and initialises an DoABC using values encoded in the Flash
@@ -85,14 +82,7 @@ public final class DoABC implements MovieTag {
         deferred = coder.readInt();
         name = coder.readString();
         
-        try {
-			this.abcFile = new AbcFile(coder, this);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-        //data = coder.readBytes(new byte[length - coder.bytesRead()]);
+        data = coder.readBytes(new byte[length - coder.bytesRead()]);
         coder.check(length);
         coder.unmark();
     }

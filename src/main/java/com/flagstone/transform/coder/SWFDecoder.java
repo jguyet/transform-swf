@@ -539,7 +539,9 @@ public final class SWFDecoder {
         int start = index;
         int length = 0;
         int available;
+        
         int dest = 0;
+        
         boolean finished = false;
         int count;
         byte[] array = new byte[0];
