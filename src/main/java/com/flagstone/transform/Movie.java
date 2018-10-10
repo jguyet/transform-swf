@@ -159,6 +159,22 @@ public final class Movie implements Copyable<Movie> {
     public List<MovieTag> getObjects() {
         return objects;
     }
+    
+    /**
+     * Get the object from Class T contained in the Movie
+     * 
+     * @param c
+     * 			Finded class
+     * @return T
+     */
+    public <T> T getObject(Class<T> c) {
+    	for (MovieTag mt : objects) {
+			if (mt.getClass().getName().equalsIgnoreCase(c.getName())) {
+    			return (T)mt;
+    		}
+    	}
+    	return null;
+    }
 
     /**
      * Sets the list of objects contained in the Movie.
@@ -186,6 +202,21 @@ public final class Movie implements Copyable<Movie> {
         }
         objects.add(anObject);
         return this;
+    }
+    
+    /**
+     * Remove the object to the Movie.
+     * 
+     * @param anObject
+     * 			the object to be removed to the movie. Must not be null.
+     * @return this object.
+     */
+    public Movie remove(final MovieTag anObject) {
+    	if (anObject == null) {
+    		throw new IllegalArgumentException();
+    	}
+    	objects.remove(anObject);
+    	return this;
     }
 
     /** {@inheritDoc} */

@@ -142,6 +142,24 @@ public final class DoAction implements MovieTag {
     public DoAction(final DoAction object) {
         actions = new ArrayList<Action>(object.actions);
     }
+    
+    public int getLength() {
+    	return this.length;
+    }
+    
+    /**
+     * Get action from clas type
+     * @param c
+     * @return
+     */
+    public <T> T getAction(Class<T> c) {
+    	for (Action a : actions) {
+    		if (a.getClass().getName().equalsIgnoreCase(c.getName())) {
+    			return (T)a;
+    		}
+    	}
+    	return null;
+    }
 
     /**
      * Adds the action object to the list of actions. If the object already
@@ -160,6 +178,21 @@ public final class DoAction implements MovieTag {
         actions.add(anAction);
         return this;
     }
+    
+    /**
+     * Remove the action object to the list of actions
+     * 
+     * @param anAction
+     * 				an object of class Action. The argument cannot be null.
+     * @return
+     */
+    public DoAction remove(final Action anAction) {
+    	if (anAction == null) {
+            throw new IllegalArgumentException();
+        }
+        actions.remove(anAction);
+        return this;
+    }
 
     /**
      * Returns the list of actions that are executed when the frame is
@@ -169,6 +202,11 @@ public final class DoAction implements MovieTag {
      */
     public List<Action> getActions() {
         return actions;
+    }
+    
+    public DoAction clearActions() {
+    	this.actions.clear();
+    	return this;
     }
 
     /**
